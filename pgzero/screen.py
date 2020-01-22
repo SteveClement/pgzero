@@ -1,6 +1,7 @@
 import numpy as np
 import pygame
 import pygame.draw
+import pygame.gfxdraw
 
 from . import ptext
 from .rect import RECT_CLASSES, ZRect
@@ -35,6 +36,13 @@ class SurfacePainter:
         end = round_pos(end)
         pygame.draw.line(self._surf, make_color(color), start, end, width)
 
+    def pixel(self, pos, color):
+        """ /!\ EXPERIMENTAL!: meaning this api may change, or dissapear in later pygame releases. If you use this, your code will break with the next pygame release.
+
+        Draw a pixel."""
+        pos = round_pos(pos)
+        pygame.gfxdraw.pixel(self._surf, pos[0], pos[1], make_color(color))
+
     def circle(self, pos, radius, color, width=1):
         """Draw a circle."""
         pos = round_pos(pos)
@@ -44,6 +52,18 @@ class SurfacePainter:
         """Draw a filled circle."""
         pos = round_pos(pos)
         pygame.draw.circle(self._surf, make_color(color), pos, radius, width)
+
+    def ellipse(self, rect, color, width=1):
+        """Draw an ellipse."""
+        if not isinstance(rect, RECT_CLASSES):
+            raise TypeError("screen.draw.ellipse() requires a rect to draw")
+        pygame.draw.ellipse(self._surf, make_color(color), rect, width)
+
+    def filled_ellipse(self, rect, color):
+        """Draw a filled ellipse."""
+        if not isinstance(rect, RECT_CLASSES):
+            raise TypeError("screen.draw.filled_ellipse() requires a rect to draw")
+        pygame.draw.ellipse(self._surf, make_color(color), rect, 0)
 
     def rect(self, rect, color, width=1):
         """Draw a rectangle."""
