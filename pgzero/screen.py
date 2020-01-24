@@ -10,8 +10,14 @@ from . import loaders
 
 def round_pos(pos):
     """Round a tuple position so it can be used for drawing."""
-    x, y = pos
-    return round(x), round(y)
+    try:
+        x, y = pos
+    except TypeError:
+        raise TypeError("Coordinate must be a tuple (not {!r})".format(pos)) from None
+    try:
+        return round(x), round(y)
+    except TypeError:
+        raise TypeError("Coordinate values must be numbers (not {!r})".format(pos)) from None
 
 
 def make_color(arg):
@@ -64,6 +70,24 @@ class SurfacePainter:
         if not isinstance(rect, RECT_CLASSES):
             raise TypeError("screen.draw.filled_ellipse() requires a rect to draw")
         pygame.draw.ellipse(self._surf, make_color(color), rect, 0)
+
+    def polygon(self, points, color):
+        """Draw a polygon."""
+        try:
+            iter(points)
+        except TypeError:
+            raise TypeError("screen.draw.filled_polygon() requires an iterable of points to draw") from None
+        points = [round_pos(point) for point in points]
+        pygame.draw.polygon(self._surf, make_color(color), points, 1)
+
+    def filled_polygon(self, points, color):
+        """Draw a filled polygon."""
+        try:
+            iter(points)
+        except TypeError:
+            raise TypeError("screen.draw.filled_polygon() requires an iterable of points to draw") from None
+        points = [round_pos(point) for point in points]
+        pygame.draw.polygon(self._surf, make_color(color), points, 0)
 
     def rect(self, rect, color, width=1):
         """Draw a rectangle."""
