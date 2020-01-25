@@ -17,7 +17,7 @@ def round_pos(pos):
     try:
         return round(x), round(y)
     except TypeError:
-        raise TypeError("Coordinate values must be numbers (not {!r})".format(pos)) from None
+        raise TypeError("Coordinate values must be numbers (not {!r})".format(pos)) from None # noqa
 
 
 def make_color(arg):
@@ -54,10 +54,10 @@ class SurfacePainter:
         pos = round_pos(pos)
         pygame.draw.circle(self._surf, make_color(color), pos, radius, width)
 
-    def filled_circle(self, pos, radius, color, width=0):
+    def filled_circle(self, pos, radius, color):
         """Draw a filled circle."""
         pos = round_pos(pos)
-        pygame.draw.circle(self._surf, make_color(color), pos, radius, width)
+        pygame.draw.circle(self._surf, make_color(color), pos, radius, 0)
 
     def ellipse(self, rect, color, width=1):
         """Draw an ellipse."""
@@ -76,7 +76,7 @@ class SurfacePainter:
         try:
             iter(points)
         except TypeError:
-            raise TypeError("screen.draw.filled_polygon() requires an iterable of points to draw") from None
+            raise TypeError("screen.draw.filled_polygon() requires an iterable of points to draw") from None # noqa
         points = [round_pos(point) for point in points]
         pygame.draw.polygon(self._surf, make_color(color), points, 1)
 
@@ -85,7 +85,7 @@ class SurfacePainter:
         try:
             iter(points)
         except TypeError:
-            raise TypeError("screen.draw.filled_polygon() requires an iterable of points to draw") from None
+            raise TypeError("screen.draw.filled_polygon() requires an iterable of points to draw") from None # noqa
         points = [round_pos(point) for point in points]
         pygame.draw.polygon(self._surf, make_color(color), points, 0)
 
@@ -95,11 +95,11 @@ class SurfacePainter:
             raise TypeError("screen.draw.rect() requires a rect to draw")
         pygame.draw.rect(self._surf, make_color(color), rect, width)
 
-    def filled_rect(self, rect, color, width=0):
+    def filled_rect(self, rect, color):
         """Draw a filled rectangle."""
         if not isinstance(rect, RECT_CLASSES):
             raise TypeError("screen.draw.filled_rect() requires a rect to draw")
-        pygame.draw.rect(self._surf, make_color(color), rect, width)
+        pygame.draw.rect(self._surf, make_color(color), rect, 0)
 
     def text(self, *args, **kwargs):
         """Draw text to the screen."""
