@@ -6,6 +6,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      SDL_AUDIODRIVER: dummy
     steps:
     - uses: actions/checkout@v1
     - name: Set up Python 3.7
@@ -22,8 +24,8 @@ jobs:
         flake8 --count pgzero pgzrun.py test
     - name: Install xvfb
       run: |
-          sudo apt-get install xvfb alsa-utils; sudo modprobe snd-dummy ; sudo modprobe snd-pcm-oss ; sudo modprobe snd-mixer-oss ; sudo modprobe snd-seq-oss ; aplay -l ; aplay -L
-
+          sudo apt-get install xvfb
+          
     - name: Run tests under xvfb
       run: |
         xvfb-run --auto-servernum python setup.py test
