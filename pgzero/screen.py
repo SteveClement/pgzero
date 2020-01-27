@@ -43,7 +43,9 @@ class SurfacePainter:
         pygame.draw.line(self._surf, make_color(color), start, end, width)
 
     def pixel(self, pos, color):
-        """ /!\ EXPERIMENTAL!: meaning this api may change, or dissapear in later pygame releases. If you use this, your code will break with the next pygame release.
+        """ :warn: EXPERIMENTAL!: meaning this api may change,
+        or dissapear in later pygame releases. If you use this,
+        your code will break with the next pygame release.
 
         Draw a pixel."""
         pos = round_pos(pos)
