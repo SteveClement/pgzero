@@ -22,7 +22,8 @@ jobs:
         flake8 --count pgzero pgzrun.py test
     - name: Install xvfb
       run: |
-          sudo apt-get install xvfb alsa-utils
+          sudo apt-get install xvfb alsa-utils; aplay -l ; aplay -L
+
     - name: Run tests under xvfb
       run: |
         xvfb-run --auto-servernum python setup.py test
