@@ -6,9 +6,9 @@ import numpy as np
 import pygame
 import pygame.image
 import pygame.surfarray
-
+from pgzero.loaders import images, set_root
 from pgzero.screen import Screen
-from pgzero.loaders import set_root, images
+from pygame import Rect
 
 
 class ScreenTest(unittest.TestCase):
